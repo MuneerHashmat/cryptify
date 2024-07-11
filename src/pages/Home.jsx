@@ -1,0 +1,144 @@
+import { useContext, useEffect, useState } from "react";
+import Footer from "../components/Footer";
+import MainContext from "../context/MainContext";
+import { ArrowBackIosNew, ArrowForwardIos } from "@mui/icons-material";
+
+const Home = () => {
+  const context = useContext(MainContext);
+  const allCrypto = context.allCrypto;
+  const currency = context.currency;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  const lastItemIndex = currentPage * itemsPerPage;
+  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const totalPages = Math.ceil(allCrypto.length / itemsPerPage);
+  let pages = [];
+  for (let i = 1; i <= totalPages; i++) {
+    if (currentPage <= 3) {
+      pages = [1, 2, 3, 4, "...", totalPages];
+    } else if (currentPage >= totalPages - 2) {
+      pages = [
+        1,
+        "...",
+        totalPages - 3,
+        totalPages - 2,
+        totalPages - 1,
+        totalPages,
+      ];
+    } else {
+      pages = [
+        1,
+        "...",
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        "...",
+        totalPages,
+      ];
+    }
+  }
+  return (
+    <>
+      <div className="pt-[100px]">
+        <div className="mx-auto text-center flex flex-col gap-4 justify-center items-center">
+          <h1 className="sm:text-[60px] text-[35px] font-bold uppercase sm:leading-[65px] leading-[40px]">
+            Stay ahead of the <br />{" "}
+            <span className="text-[#F0B90B]">crypto curve</span>
+          </h1>
+          <p className="text-lg md:text-xl text-center max-w-[525px] w-[90vw]">
+            Track prices, analyze trends, and make informed decisions. Easy,
+            reliable, and free.
+          </p>
+        </div>
+        <div className="form"></div>
+
+        <div className="mt-10 lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow">
+          <div className=" grid md:grid-cols-full grid-cols-small py-4 px-5 border-b border-gray-300 dark:border-gray-600">
+            <p>#</p>
+            <p className="ml-3">Crypto</p>
+            <p>Price</p>
+            <p className="text-center">24h Change</p>
+            <p className="text-right md:block hidden">Market Cap</p>
+          </div>
+
+          {allCrypto.slice(firstItemIndex, lastItemIndex).map((item) => (
+            <div
+              key={item.id}
+              className="main-table grid  md:grid-cols-full grid-cols-small py-4 px-5 border-b border-gray-300 dark:border-gray-600"
+            >
+              <p>{item.market_cap_rank}</p>
+              <div className="flex items-center gap-2">
+                <img
+                  src={item.image}
+                  alt="image"
+                  className="w-[40px] rounded-full"
+                />
+                <p>
+                  <span className="uppercase">{item.symbol} </span>
+                  <br />
+                  <span className="text-sm text-gray-500 dark:text-gray-300">
+                    {item.name}
+                  </span>
+                </p>
+              </div>
+              <p>
+                {currency.symbol} {item.current_price.toLocaleString()}
+              </p>
+              <p
+                style={{ textAlign: "center" }}
+                className={
+                  item.price_change_percentage_24h > 0
+                    ? " text-green-600"
+                    : "text-red-600"
+                }
+              >
+                {Math.floor(item.price_change_percentage_24h * 100) / 100}
+              </p>
+              <p className="text-right md:block hidden">
+                {currency.symbol} {item.market_cap.toLocaleString()}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 mb-10 flex gap-1 justify-center lg:w-[60vw] w-[90vw] mx-auto flex-wrap">
+          <button
+            disabled={currentPage == 1 ? true : false}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="bg-[#FAFAFA] dark:bg-[#1E2329] py-1 px-1 rounded-md shadow-sm border border-gray-300 dark:border-gray-600"
+            style={{ color: currentPage == 1 ? "gray" : null }}
+          >
+            <ArrowBackIosNew />
+          </button>
+          {pages.map((page, index) =>
+            page === "..." ? (
+              <p key={index}>{page}</p>
+            ) : (
+              <button
+                key={index}
+                className="bg-[#FAFAFA] dark:bg-[#1E2329] py-1 px-4 rounded-md shadow-sm border border-gray-300 dark:border-gray-600"
+                style={{
+                  backgroundColor: page == currentPage ? "#F0B90B" : null,
+                }}
+                onClick={() => setCurrentPage(page)}
+              >
+                {page}
+              </button>
+            )
+          )}
+          <button
+            disabled={currentPage == totalPages ? true : false}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="bg-[#FAFAFA] dark:bg-[#1E2329] py-1 px-1 rounded-md shadow-sm border border-gray-300 dark:border-gray-600"
+            style={{ color: currentPage == totalPages ? "gray" : null }}
+          >
+            <ArrowForwardIos />
+          </button>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
+};
+
+export default Home;

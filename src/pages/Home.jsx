@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Footer from "../components/Footer";
 import MainContext from "../context/MainContext";
 import { ArrowBackIosNew, ArrowForwardIos } from "@mui/icons-material";
@@ -7,6 +7,8 @@ const Home = () => {
   const context = useContext(MainContext);
   const allCrypto = context.allCrypto;
   const currency = context.currency;
+  const [cryptos, setCryptos] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const lastItemIndex = currentPage * itemsPerPage;
@@ -37,6 +39,22 @@ const Home = () => {
       ];
     }
   }
+
+  const handleOnChange = (e) => {
+    setSearchInput(e.target.value);
+    if (e.target.value.trim() == "") {
+      setCryptos([]);
+    }
+  };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    const searchText = searchInput.trim().toLowerCase();
+    const filteredCryptos = await allCrypto.filter((item) => {
+      return item.name.toLowerCase().includes(searchText);
+    });
+    setCryptos(filteredCryptos);
+  };
   return (
     <>
       <div className="pt-[100px]">
@@ -50,9 +68,25 @@ const Home = () => {
             reliable, and free.
           </p>
         </div>
-        <div className="form"></div>
+        <div className="mt-10">
+          <form
+            className="flex justify-center gap-1 items-center"
+            onSubmit={handleOnSubmit}
+          >
+            <input
+              type="text"
+              placeholder="search crypto"
+              className="bg-white dark:bg-[#181A20] border border-gray-600 dark:border-gray-300 overflow-hidden px-2 py-1 text-xl rounded-md outline-none"
+              value={searchInput}
+              onChange={handleOnChange}
+            />
+            <button className="rounded-md bg-[#F0B90B] px-3 py-2 hover:scale-105 text-black">
+              Search
+            </button>
+          </form>
+        </div>
 
-        <div className="mt-10 lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow">
+        <div className="mt-5 mb-10 lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow">
           <div className=" grid md:grid-cols-full grid-cols-small py-4 px-5 border-b border-gray-300 dark:border-gray-600">
             <p>#</p>
             <p className="ml-3">Crypto</p>
@@ -61,80 +95,120 @@ const Home = () => {
             <p className="text-right md:block hidden">Market Cap</p>
           </div>
 
-          {allCrypto.slice(firstItemIndex, lastItemIndex).map((item) => (
-            <div
-              key={item.id}
-              className="main-table grid  md:grid-cols-full grid-cols-small py-4 px-5 border-b border-gray-300 dark:border-gray-600"
+          {cryptos.length == 0
+            ? allCrypto.slice(firstItemIndex, lastItemIndex).map((item) => (
+                <div
+                  key={item.id}
+                  className="main-table grid  md:grid-cols-full grid-cols-small items-center py-4 px-5 border-b border-gray-300 dark:border-gray-600 cursor-pointer"
+                >
+                  <p>{item.market_cap_rank}</p>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={item.image}
+                      alt="image"
+                      className="w-[30px] sm:w-[40px] rounded-full"
+                    />
+                    <p>
+                      <span className="uppercase">{item.symbol} </span>
+                      <br />
+                      <span className="text-sm hidden sm:inline text-gray-500 dark:text-gray-300">
+                        {item.name}
+                      </span>
+                    </p>
+                  </div>
+                  <p>
+                    {currency.symbol} {item.current_price.toLocaleString()}
+                  </p>
+                  <p
+                    style={{ textAlign: "center" }}
+                    className={
+                      item.price_change_percentage_24h > 0
+                        ? " text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {Math.floor(item.price_change_percentage_24h * 100) / 100}
+                  </p>
+                  <p className="text-right md:block hidden">
+                    {currency.symbol} {item.market_cap.toLocaleString()}
+                  </p>
+                </div>
+              ))
+            : cryptos.slice(0, 10).map((item) => (
+                <div
+                  key={item.id}
+                  className="main-table grid  md:grid-cols-full grid-cols-small items-center py-4 px-5 border-b border-gray-300 dark:border-gray-600 cursor-pointer"
+                >
+                  <p>{item.market_cap_rank}</p>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={item.image}
+                      alt="image"
+                      className="w-[30px] sm:w-[40px] rounded-full"
+                    />
+                    <p>
+                      <span className="uppercase">{item.symbol} </span>
+                      <br />
+                      <span className="text-sm hidden sm:inline text-gray-500 dark:text-gray-300">
+                        {item.name}
+                      </span>
+                    </p>
+                  </div>
+                  <p>
+                    {currency.symbol} {item.current_price.toLocaleString()}
+                  </p>
+                  <p
+                    style={{ textAlign: "center" }}
+                    className={
+                      item.price_change_percentage_24h > 0
+                        ? " text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {Math.floor(item.price_change_percentage_24h * 100) / 100}
+                  </p>
+                  <p className="text-right md:block hidden">
+                    {currency.symbol} {item.market_cap.toLocaleString()}
+                  </p>
+                </div>
+              ))}
+        </div>
+        {cryptos.length == 0 && (
+          <div className="flex gap-1 justify-center lg:w-[60vw] w-[90vw] mx-auto flex-wrap mb-20">
+            <button
+              disabled={currentPage == 1 ? true : false}
+              onClick={() => setCurrentPage(currentPage - 1)}
+              className="bg-[#FAFAFA] dark:bg-[#1E2329] py-1 px-1 rounded-md shadow-sm border border-gray-300 dark:border-gray-600"
+              style={{ color: currentPage == 1 ? "gray" : null }}
             >
-              <p>{item.market_cap_rank}</p>
-              <div className="flex items-center gap-2">
-                <img
-                  src={item.image}
-                  alt="image"
-                  className="w-[40px] rounded-full"
-                />
-                <p>
-                  <span className="uppercase">{item.symbol} </span>
-                  <br />
-                  <span className="text-sm text-gray-500 dark:text-gray-300">
-                    {item.name}
-                  </span>
-                </p>
-              </div>
-              <p>
-                {currency.symbol} {item.current_price.toLocaleString()}
-              </p>
-              <p
-                style={{ textAlign: "center" }}
-                className={
-                  item.price_change_percentage_24h > 0
-                    ? " text-green-600"
-                    : "text-red-600"
-                }
-              >
-                {Math.floor(item.price_change_percentage_24h * 100) / 100}
-              </p>
-              <p className="text-right md:block hidden">
-                {currency.symbol} {item.market_cap.toLocaleString()}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-5 mb-10 flex gap-1 justify-center lg:w-[60vw] w-[90vw] mx-auto flex-wrap">
-          <button
-            disabled={currentPage == 1 ? true : false}
-            onClick={() => setCurrentPage(currentPage - 1)}
-            className="bg-[#FAFAFA] dark:bg-[#1E2329] py-1 px-1 rounded-md shadow-sm border border-gray-300 dark:border-gray-600"
-            style={{ color: currentPage == 1 ? "gray" : null }}
-          >
-            <ArrowBackIosNew />
-          </button>
-          {pages.map((page, index) =>
-            page === "..." ? (
-              <p key={index}>{page}</p>
-            ) : (
-              <button
-                key={index}
-                className="bg-[#FAFAFA] dark:bg-[#1E2329] py-1 px-4 rounded-md shadow-sm border border-gray-300 dark:border-gray-600"
-                style={{
-                  backgroundColor: page == currentPage ? "#F0B90B" : null,
-                }}
-                onClick={() => setCurrentPage(page)}
-              >
-                {page}
-              </button>
-            )
-          )}
-          <button
-            disabled={currentPage == totalPages ? true : false}
-            onClick={() => setCurrentPage(currentPage + 1)}
-            className="bg-[#FAFAFA] dark:bg-[#1E2329] py-1 px-1 rounded-md shadow-sm border border-gray-300 dark:border-gray-600"
-            style={{ color: currentPage == totalPages ? "gray" : null }}
-          >
-            <ArrowForwardIos />
-          </button>
-        </div>
+              <ArrowBackIosNew />
+            </button>
+            {pages.map((page, index) =>
+              page === "..." ? (
+                <p key={index}>{page}</p>
+              ) : (
+                <button
+                  key={index}
+                  className="bg-[#FAFAFA] dark:bg-[#1E2329] py-1 px-4 rounded-md shadow-sm border border-gray-300 dark:border-gray-600"
+                  style={{
+                    backgroundColor: page == currentPage ? "#F0B90B" : null,
+                  }}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </button>
+              )
+            )}
+            <button
+              disabled={currentPage == totalPages ? true : false}
+              onClick={() => setCurrentPage(currentPage + 1)}
+              className="bg-[#FAFAFA] dark:bg-[#1E2329] py-1 px-1 rounded-md shadow-sm border border-gray-300 dark:border-gray-600"
+              style={{ color: currentPage == totalPages ? "gray" : null }}
+            >
+              <ArrowForwardIos />
+            </button>
+          </div>
+        )}
       </div>
       <Footer />
     </>

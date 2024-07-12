@@ -3,7 +3,7 @@ import MainContext from "./MainContext";
 import { useEffect, useState } from "react";
 
 const MainProvider = ({ children }) => {
-  const initialState = localStorage.getItem("theme") === "dark";
+  const initialState = localStorage.getItem("theme") === "light";
   const [isDark, setIsDark] = useState(initialState);
   const [allCrypto, setAllCrypto] = useState([]);
   const [currency, setCurrency] = useState({
@@ -42,7 +42,7 @@ const MainProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (isDark) {
+    if (!isDark) {
       window.document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
     } else {

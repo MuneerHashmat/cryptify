@@ -1,5 +1,82 @@
+import { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import MainContext from "../context/MainContext";
+import { ScaleLoader } from "react-spinners";
+import { ArrowBack } from "@mui/icons-material";
+
 const CryptoDetails = () => {
-  return <div>CryptoDetails</div>;
+  const { cryptoId } = useParams();
+  const [cryptoData, setCryptoData] = useState();
+  const context = useContext(MainContext);
+  const currency = context.currency;
+
+  const fetchCryptoData = async () => {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": "CG-FFJXfwWGdxU5iArVafJc7c2h",
+      },
+    };
+
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${cryptoId}`,
+        options
+      );
+      const data = await response.json();
+      console.log(data);
+      setCryptoData(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchCryptoData();
+  }, [currency]);
+  if (cryptoData) {
+    return (
+      <div className="pt-[100px]">
+        <div className="md:mx-16 mx-[5vw] p-1 w-max mb-10 bg-[#F0B90B] rounded-md hover:scale-[1.02] transition-all text-black">
+          <Link to={"/"} className="flex gap-2 ">
+            <ArrowBack sx={{ fontSize: "30px" }} />
+          </Link>
+        </div>
+        <div className="mt-5 mb-10 py-5 px-2 lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow">
+          <div className="mx-auto flex flex-col justify-center items-center gap-3">
+            <img
+              src={cryptoData.image.large}
+              alt="image"
+              className="rounded-full w-[150px]"
+            />
+            <h1 className="text-xl">
+              {cryptoData.name} ({cryptoData.symbol.toUpperCase()})
+            </h1>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="pt-[100px]">
+        <div className="mx-16 p-1 w-max mb-10 bg-[#F0B90B] rounded-md hover:scale-[1.02] transition-all text-black">
+          <Link to={"/"} className="flex gap-2 ">
+            <ArrowBack sx={{ fontSize: "30px" }} />
+          </Link>
+        </div>
+        <div className="p-4 mt-5 mb-[200px] lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow flex justify-center items-center">
+          <ScaleLoader
+            color="#F0B90B"
+            height={100}
+            margin={10}
+            radius={10}
+            width={10}
+          />
+        </div>
+      </div>
+    );
+  }
 };
 
 export default CryptoDetails;

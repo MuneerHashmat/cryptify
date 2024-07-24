@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
-import Footer from "../components/Footer";
+import { useContext, useEffect, useState } from "react";
 import MainContext from "../context/MainContext";
 import { ArrowBackIosNew, ArrowForwardIos } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const context = useContext(MainContext);
@@ -43,7 +43,7 @@ const Home = () => {
   const handleOnChange = (e) => {
     setSearchInput(e.target.value);
     if (e.target.value.trim() == "") {
-      setCryptos([]);
+      setCryptos(allCrypto);
     }
   };
 
@@ -55,6 +55,12 @@ const Home = () => {
     });
     setCryptos(filteredCryptos);
   };
+
+  useEffect(() => {
+    setCryptos(allCrypto);
+    setSearchInput("");
+  }, [allCrypto]);
+
   return (
     <>
       <div className="pt-[100px]">
@@ -95,9 +101,10 @@ const Home = () => {
             <p className="text-right md:block hidden">Market Cap</p>
           </div>
 
-          {cryptos.length == 0
-            ? allCrypto.slice(firstItemIndex, lastItemIndex).map((item) => (
-                <div
+          {cryptos.length >= 100
+            ? cryptos.slice(firstItemIndex, lastItemIndex).map((item) => (
+                <Link
+                  to={`/crypto/${item.id}`}
                   key={item.id}
                   className="main-table grid  md:grid-cols-full grid-cols-small items-center py-4 px-5 border-b border-gray-300 dark:border-gray-600 cursor-pointer"
                 >
@@ -132,10 +139,11 @@ const Home = () => {
                   <p className="text-right md:block hidden">
                     {currency.symbol} {item.market_cap.toLocaleString()}
                   </p>
-                </div>
+                </Link>
               ))
             : cryptos.slice(0, 10).map((item) => (
-                <div
+                <Link
+                  to={`/crypto/${item.id}`}
                   key={item.id}
                   className="main-table grid  md:grid-cols-full grid-cols-small items-center py-4 px-5 border-b border-gray-300 dark:border-gray-600 cursor-pointer"
                 >
@@ -170,10 +178,10 @@ const Home = () => {
                   <p className="text-right md:block hidden">
                     {currency.symbol} {item.market_cap.toLocaleString()}
                   </p>
-                </div>
+                </Link>
               ))}
         </div>
-        {cryptos.length == 0 && (
+        {cryptos.length >= 100 && (
           <div className="flex gap-1 justify-center lg:w-[60vw] w-[90vw] mx-auto flex-wrap mb-20">
             <button
               disabled={currentPage == 1 ? true : false}
@@ -210,7 +218,6 @@ const Home = () => {
           </div>
         )}
       </div>
-      <Footer />
     </>
   );
 };

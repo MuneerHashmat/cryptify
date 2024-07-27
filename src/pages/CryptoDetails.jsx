@@ -44,7 +44,7 @@ const CryptoDetails = () => {
     };
     try {
       const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=${currency.name}&days=10&interval=daily`,
+        `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=${currency.name}&days=9&interval=daily`,
         options
       );
       const data = await response.json();
@@ -67,7 +67,7 @@ const CryptoDetails = () => {
             <ArrowBack sx={{ fontSize: "30px" }} />
           </Link>
         </div>
-        <div className="mt-5 mb-10 pt-5 pb-7 px-2 lg:w-[50vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow">
+        <div className="mt-5 mb-10 pt-5 pb-7 px-2 lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow">
           <div className="mx-auto flex flex-col justify-center items-center">
             <img
               src={cryptoData.image.large}

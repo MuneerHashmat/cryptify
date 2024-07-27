@@ -67,7 +67,7 @@ const CryptoDetails = () => {
             <ArrowBack sx={{ fontSize: "30px" }} />
           </Link>
         </div>
-        <div className="mt-5 mb-10 pt-5 pb-7 px-2 lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow">
+        <div className="mt-5 mb-10 pt-5 pb-7 px-2 lg:w-[50vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow">
           <div className="mx-auto flex flex-col justify-center items-center">
             <img
               src={cryptoData.image.large}

@@ -23,7 +23,7 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="flex justify-between px-12 py-[17px] w-[100vw] fixed text-[#F0B90B] bg-white dark:bg-[#181A20] shadow-md top-0">
+    <div className="flex justify-between px-12 py-[17px] w-[100vw] fixed text-[#F0B90B] bg-white dark:bg-[#181A20] shadow-md top-0 z-30">
       <Link to="/">
         <div className="flex gap-2 items-center">
           <img src={logo} alt="logo" className="w-[30px] h-[30px]" />

@@ -136,7 +136,7 @@ const CryptoDetails = () => {
   } else {
     return (
       <div className="pt-[100px]">
-        <div className="mx-16 p-1 w-max mb-10 bg-[#F0B90B] rounded-md hover:scale-[1.02] transition-all text-black">
+        <div className="md:mx-16 mx-[5vw p-1 w-max mb-10 bg-[#F0B90B] rounded-md hover:scale-[1.02] transition-all text-black">
           <Link to={"/"} className="flex gap-2 ">
             <ArrowBack sx={{ fontSize: "30px" }} />
           </Link>

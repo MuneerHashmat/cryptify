@@ -44,7 +44,7 @@ const CryptoDetails = () => {
     };
     try {
       const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=${currency.name}&days=9&interval=daily`,
+        `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=${currency.name}&days=10&interval=daily`,
         options
       );
       const data = await response.json();

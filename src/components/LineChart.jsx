@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 
 const LineChart = ({ historicalData }) => {
   const [data, setData] = useState([["Date", "Prices"]]);
+  const options = {
+    title: "past 7 days prices",
+    legend: { position: "bottom" },
+  };
 
   useEffect(() => {
     let dataCopy = [["Date", "Prices"]];
@@ -18,7 +22,13 @@ const LineChart = ({ historicalData }) => {
     }
   }, [historicalData]);
   return (
-    <Chart chartType="LineChart" data={data} height={"100%"} legendToggle />
+    <Chart
+      chartType="LineChart"
+      data={data}
+      height={"100%"}
+      legendToggle
+      options={options}
+    />
   );
 };
 

@@ -44,7 +44,7 @@ const CryptoDetails = () => {
     };
     try {
       const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=${currency.name}&days=10&interval=daily`,
+        `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=${currency.name}&days=7&interval=daily`,
         options
       );
       const data = await response.json();
@@ -79,7 +79,7 @@ const CryptoDetails = () => {
             </h1>
           </div>
 
-          <div className="md:px-10 sm:px-2 px-1 mx-auto mt-10">
+          <div className="md:px-10 sm:px-2 px-1 mx-auto mt-10 sm:h-[300px] h-[200px]">
             <LineChart historicalData={historicalData} />
           </div>
 

@@ -26,4 +26,4 @@ This project is an intuitive platform for tracking cryptocurrency prices, design
 - ⚛️ React
 - ⚡ Vite
 - 🎨 Tailwind CSS
-- CoinGecko API
+- 🌐 CoinGecko API

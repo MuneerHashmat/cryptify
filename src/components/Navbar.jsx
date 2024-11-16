@@ -44,10 +44,10 @@ const Navbar = () => {
           onClick={() => context.setTheme()}
           className="hover:scale-[1.05]"
         >
-          {!context.isDark ? (
-            <LightMode sx={{ fontSize: "35px" }} />
-          ) : (
+          {!context.themeFlag ? (
             <DarkMode x={{ fontSize: "35px" }} />
+          ) : (
+            <LightMode sx={{ fontSize: "30px" }} />
           )}
         </button>
       </div>

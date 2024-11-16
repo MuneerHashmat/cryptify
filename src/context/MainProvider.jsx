@@ -4,14 +4,16 @@ import { useEffect, useState } from "react";
 
 const MainProvider = ({ children }) => {
   const initialState = localStorage.getItem("theme") === "light";
-  const [isDark, setIsDark] = useState(initialState);
+  const [themeFlag, setThemeFlag] = useState(initialState);
   const [allCrypto, setAllCrypto] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [currency, setCurrency] = useState({
     name: "usd",
     symbol: "$",
   });
 
   const fetchAllCrypto = async () => {
+    setLoading(true);
     const options = {
       method: "GET",
       headers: {
@@ -30,11 +32,13 @@ const MainProvider = ({ children }) => {
       setAllCrypto(data);
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
   const setTheme = () => {
-    setIsDark(!isDark);
+    setThemeFlag(!themeFlag);
   };
 
   const setNewCurrency = (obj) => {
@@ -42,14 +46,14 @@ const MainProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (!isDark) {
-      window.document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
+    if (themeFlag) {
       window.document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
+    } else {
+      window.document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     }
-  }, [isDark]);
+  }, [themeFlag]);
 
   useEffect(() => {
     fetchAllCrypto();
@@ -57,7 +61,14 @@ const MainProvider = ({ children }) => {
 
   return (
     <MainContext.Provider
-      value={{ isDark, allCrypto, currency, setTheme, setNewCurrency }}
+      value={{
+        themeFlag,
+        allCrypto,
+        currency,
+        loading,
+        setTheme,
+        setNewCurrency,
+      }}
     >
       {children}
     </MainContext.Provider>

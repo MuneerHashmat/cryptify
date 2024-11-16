@@ -4,7 +4,6 @@ import MainContext from "../context/MainContext";
 import { ScaleLoader } from "react-spinners";
 import { ArrowBack } from "@mui/icons-material";
 import LineChart from "../components/LineChart";
-import toast from "react-hot-toast";
 
 const CryptoDetails = () => {
   const { cryptoId } = useParams();
@@ -42,7 +41,6 @@ const CryptoDetails = () => {
       console.log(historicJson);
     } catch (error) {
       console.log(error);
-      toast.error("Failed to fetch data for this crypto!");
     } finally {
       setLoading(false);
     }

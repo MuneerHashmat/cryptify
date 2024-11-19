@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import MainContext from "./MainContext";
 import { useEffect, useState } from "react";
+import { API_KEY } from "../config/apiKey";
 
 const MainProvider = ({ children }) => {
   const initialState = localStorage.getItem("theme") === "light";
@@ -18,7 +19,7 @@ const MainProvider = ({ children }) => {
       method: "GET",
       headers: {
         accept: "application/json",
-        "x-cg-demo-api-key": "CG-FFJXfwWGdxU5iArVafJc7c2h",
+        "x-cg-demo-api-key": API_KEY,
       },
     };
 

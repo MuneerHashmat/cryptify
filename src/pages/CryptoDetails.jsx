@@ -4,6 +4,7 @@ import MainContext from "../context/MainContext";
 import { ScaleLoader } from "react-spinners";
 import { ArrowBack } from "@mui/icons-material";
 import LineChart from "../components/LineChart";
+import { API_KEY } from "../config/apiKey";
 
 const CryptoDetails = () => {
   const { cryptoId } = useParams();
@@ -19,7 +20,7 @@ const CryptoDetails = () => {
       method: "GET",
       headers: {
         accept: "application/json",
-        "x-cg-demo-api-key": "CG-FFJXfwWGdxU5iArVafJc7c2h",
+        "x-cg-demo-api-key": API_KEY,
       },
     };
     try {

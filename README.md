@@ -21,6 +21,28 @@ This project is an intuitive platform for tracking cryptocurrency prices, design
 - 🎨 Dark mode to enhance user experience
 - 📱 Responsive Design
 
+## Installation:
+
+1. Clone this repository :
+
+```bash
+git clone https://github.com/MuneerHashmat/cryptify.git
+```
+
+2. Navigate to the folder: `cd cryptify`
+3. Install the dependencies: `npm install`
+4. Create a .env file on root directory and add the coingecko api key environment variable:
+
+```bash
+VITE_CG_DEMO_API_KEY
+```
+
+4. Start development server:
+
+```bash
+npm run dev
+```
+
 ## Tech Stack
 
 - ⚛️ React

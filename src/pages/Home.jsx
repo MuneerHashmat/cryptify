@@ -87,7 +87,7 @@ const Home = () => {
           </div>
         ) : (
           <>
-            <div className="mt-10">
+            <div className="mt-10 lg:w-[60vw] w-[90vw] mx-auto">
               <form
                 className="flex justify-center gap-1 items-center"
                 onSubmit={handleOnSubmit}

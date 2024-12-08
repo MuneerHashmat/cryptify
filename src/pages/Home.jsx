@@ -89,7 +89,7 @@ const Home = () => {
           <>
             <div className="mt-10 lg:w-[60vw] w-[90vw] mx-auto">
               <form
-                className="flex justify-center gap-1 items-center"
+                className="flex justify-center gap-1 items-center w-full"
                 onSubmit={handleOnSubmit}
               >
                 <input
@@ -155,7 +155,7 @@ const Home = () => {
               ))}
             </div>
             {cryptos.length >= allCrypto.length && (
-              <div className="flex gap-1 justify-center lg:w-[60vw] w-[90vw] mx-auto flex-wrap mb-20">
+              <div className="flex gap-1 justify-center lg:w-[60vw] w-[90vw] mx-auto mb-20">
                 <button
                   disabled={currentPage == 1 ? true : false}
                   onClick={() => setCurrentPage(currentPage - 1)}
@@ -173,6 +173,7 @@ const Home = () => {
                       className="bg-[#FAFAFA] dark:bg-[#1E2329] py-1 px-4 rounded-md shadow-sm border border-gray-300 dark:border-gray-600"
                       style={{
                         backgroundColor: page == currentPage ? "#F0B90B" : null,
+                        padding: page >= 10 ? "4px 12px" : "",
                       }}
                       onClick={() => setCurrentPage(page)}
                     >

@@ -89,17 +89,18 @@ const Home = () => {
           <>
             <div className="mt-10 lg:w-[60vw] w-[90vw] mx-auto">
               <form
-                className="flex justify-center gap-1 items-center w-full"
+                className="flex justify-center gap-2 items-center lg:w-[40vw] md:w-[60vw] mx-auto w-[85vw]"
                 onSubmit={handleOnSubmit}
               >
                 <input
                   type="text"
                   placeholder="search crypto"
-                  className="bg-white dark:bg-[#181A20] border border-gray-600 dark:border-gray-300 overflow-hidden px-2 py-1 text-xl rounded-md outline-none"
+                  className="bg-white dark:bg-[#181A20] border
+                   border-gray-600 dark:border-gray-300 overflow-hidden px-2 py-1 text-xl rounded-md outline-none md:w-[78%] w-[68%]"
                   value={searchInput}
                   onChange={handleOnChange}
                 />
-                <button className="rounded-md bg-[#F0B90B] px-3 py-2 hover:scale-105 text-black">
+                <button className="rounded-md bg-[#F0B90B] px-3 py-2 hover:scale-105 text-black md:w-[18%] w-[28%]">
                   Search
                 </button>
               </form>

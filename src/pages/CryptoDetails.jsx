@@ -4,7 +4,8 @@ import MainContext from "../context/MainContext";
 import { ScaleLoader } from "react-spinners";
 import { ArrowBack } from "@mui/icons-material";
 import LineChart from "../components/LineChart";
-import { API_KEY } from "../config/apiKey";
+import { api } from "../config/axiosInstance";
+import toast from "react-hot-toast";
 
 const CryptoDetails = () => {
   const { cryptoId } = useParams();
@@ -16,24 +17,17 @@ const CryptoDetails = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": API_KEY,
-      },
-    };
+
     try {
       const [cryptoResponse, historicResponse] = await Promise.all([
-        fetch(`https://api.coingecko.com/api/v3/coins/${cryptoId}`, options),
-        fetch(
-          `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=${currency.name}&days=7&interval=daily`,
-          options
+        api.get(`${cryptoId}`),
+        api.get(
+          `${cryptoId}/market_chart?vs_currency=${currency.name}&days=7&interval=daily`
         ),
       ]);
 
-      const cryptoJson = await cryptoResponse.json();
-      const historicJson = await historicResponse.json();
+      const cryptoJson = cryptoResponse.data;
+      const historicJson = historicResponse.data;
 
       setCryptoData(cryptoJson);
       setHistoricalData(historicJson);
@@ -41,7 +35,11 @@ const CryptoDetails = () => {
       console.log(cryptoJson);
       console.log(historicJson);
     } catch (error) {
-      console.log(error);
+      if (error.code === "ECONNABORTED") {
+        toast.error("Request timeout!");
+      } else {
+        console.error("Error:", error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -49,6 +47,7 @@ const CryptoDetails = () => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currency]);
   return (
     <div className="pt-[100px]">

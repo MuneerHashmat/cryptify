@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import MainContext from "./MainContext";
 import { useEffect, useState } from "react";
-import { API_KEY } from "../config/apiKey";
+import { api } from "../config/axiosInstance";
+import toast from "react-hot-toast";
 
 const MainProvider = ({ children }) => {
   const initialState = localStorage.getItem("theme") === "light";
@@ -15,24 +16,17 @@ const MainProvider = ({ children }) => {
 
   const fetchAllCrypto = async () => {
     setLoading(true);
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": API_KEY,
-      },
-    };
 
     try {
-      const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency.name}`,
-        options
-      );
-      const data = await response.json();
-      console.log(data);
-      setAllCrypto(data);
-    } catch (e) {
-      console.error(e);
+      const response = await api.get(`markets?vs_currency=${currency.name}`);
+      console.log(response.data);
+      setAllCrypto(response.data);
+    } catch (error) {
+      if (error.code === "ECONNABORTED") {
+        toast.error("Request timeout!");
+      } else {
+        console.error("Error:", error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -58,6 +52,7 @@ const MainProvider = ({ children }) => {
 
   useEffect(() => {
     fetchAllCrypto();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currency]);
 
   return (

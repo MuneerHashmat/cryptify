@@ -7,6 +7,7 @@ export default {
       gridTemplateColumns: {
         full: "0.5fr 1.5fr 1fr 1fr 1.5fr",
         small: "1fr 3fr 2fr 1fr",
+        smaller: "1fr 2.5fr 2.5fr 1fr",
       },
     },
   },

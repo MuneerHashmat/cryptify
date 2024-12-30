@@ -107,7 +107,7 @@ const Home = () => {
             </div>
 
             <div className="mt-5 mb-10 lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow">
-              <div className=" grid md:grid-cols-full grid-cols-small py-4 px-5 border-b border-gray-300 dark:border-gray-600">
+              <div className=" grid md:grid-cols-full sm:grid-cols-small grid-cols-smaller py-4 px-5 border-b border-gray-300 dark:border-gray-600">
                 <p>#</p>
                 <p className="ml-3">Crypto</p>
                 <p>Price</p>
@@ -119,7 +119,7 @@ const Home = () => {
                 <Link
                   to={`/crypto/${item.id}`}
                   key={item.id}
-                  className="main-table grid  md:grid-cols-full grid-cols-small items-center py-4 px-5 border-b border-gray-300 dark:border-gray-600 cursor-pointer"
+                  className="main-table grid  md:grid-cols-full sm:grid-cols-small grid-cols-smaller items-center py-4 px-5 border-b border-gray-300 dark:border-gray-600 cursor-pointer"
                 >
                   <p>{item.market_cap_rank}</p>
                   <div className="flex items-center gap-2">

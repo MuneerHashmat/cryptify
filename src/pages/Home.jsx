@@ -10,7 +10,8 @@ const Home = () => {
   const currency = context.currency;
   const [cryptos, setCryptos] = useState(allCrypto);
   const [searchInput, setSearchInput] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const initialPageNo=parseInt(sessionStorage.getItem("page")) || 1;
+  const [currentPage, setCurrentPage] = useState(initialPageNo);
   const [itemsPerPage] = useState(10);
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
@@ -50,6 +51,7 @@ const Home = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    setCurrentPage(1);
     const searchText = searchInput.trim().toLowerCase();
     const filteredCryptos = allCrypto.filter((item) => {
       return item.name.toLowerCase().includes(searchText);
@@ -61,6 +63,10 @@ const Home = () => {
     setCryptos(allCrypto);
     setSearchInput("");
   }, [allCrypto]);
+
+  useEffect(()=>{
+    sessionStorage.setItem("page",currentPage);
+  },[currentPage])
 
   return (
     <>

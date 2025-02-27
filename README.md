@@ -31,17 +31,9 @@ git clone https://github.com/MuneerHashmat/cryptify.git
 
 2. Navigate to the folder: `cd cryptify`
 3. Install the dependencies: `npm install`
-4. Create a .env file on root directory and add the coingecko api key environment variable:
+4. Start development server: `npm run dev`
 
-```bash
-VITE_CG_DEMO_API_KEY
-```
 
-4. Start development server:
-
-```bash
-npm run dev
-```
 
 ## Tech Stack
 
@@ -49,3 +41,36 @@ npm run dev
 - ⚡ Vite
 - 🎨 Tailwind CSS
 - 🌐 CoinGecko API
+
+
+## API Documentation
+
+### Github repository
+**[Cryptify API](https://github.com/MuneerHashmat/cryptify-proxy-server.git)**
+
+
+### Base url
+```
+https://cryptify.up.railway.app/
+```
+
+## Endpoints
+
+1. **All cryptocurrencies** 
+
+```
+GET /api/v1/all-cryptos/:currency
+```
+currency options: usd, eur, inr
+
+1. **Cryptocurrency detail by id** 
+
+```
+/api/v1/crypto-detail/:id
+```
+
+1. **Cryptocurrency historical prices by id** 
+
+```
+GET /api/v1/crypto-historical-data/:id/:currency
+```

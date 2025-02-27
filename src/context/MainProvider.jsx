@@ -18,7 +18,7 @@ const MainProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const response = await api.get(`markets?vs_currency=${currency.name}`);
+      const response = await api.get(`/api/v1/all-cryptos/${currency.name}`);
       console.log(response.data);
       setAllCrypto(response.data);
     } catch (error) {

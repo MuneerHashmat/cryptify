@@ -20,9 +20,9 @@ const CryptoDetails = () => {
 
     try {
       const [cryptoResponse, historicResponse] = await Promise.all([
-        api.get(`${cryptoId}`),
+        api.get(`/api/v1/crypto-detail/${cryptoId}`),
         api.get(
-          `${cryptoId}/market_chart?vs_currency=${currency.name}&days=7&interval=daily`
+          `/api/v1/crypto-historical-data/${cryptoId}/${currency.name}`
         ),
       ]);
 

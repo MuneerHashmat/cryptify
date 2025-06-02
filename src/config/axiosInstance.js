@@ -2,6 +2,6 @@ import axios from "axios";
 
 
 export const api = axios.create({
-  baseURL: "https://cryptify.up.railway.app",
+  baseURL: "https://cryptify.koyeb.app/",
   timeout: 5000,
 });

@@ -82,7 +82,7 @@ const Home = () => {
           </p>
         </div>
         {context.loading ? (
-          <div className="mt-10 mb-64 py-20 lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow flex justify-center items-center">
+          <div className="mt-10 h-[600px] py-20 lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow flex justify-center">
             <ScaleLoader
               color="#F0B90B"
               height={100}

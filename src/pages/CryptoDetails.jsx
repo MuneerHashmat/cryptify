@@ -122,7 +122,7 @@ const CryptoDetails = () => {
           </div>
         </div>
       ) : (
-        <div className="p-4 mt-5 mb-[200px] lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow flex justify-center items-center">
+        <div className="p-4 mt-5 mb-10 h-[700px] lg:w-[60vw] w-[90vw] mx-auto rounded-md bg-[#FAFAFA] dark:bg-[#1E2329] shadow flex justify-center items-center">
           <ScaleLoader
             color="#F0B90B"
             height={100}

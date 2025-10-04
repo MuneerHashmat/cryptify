@@ -1,3 +1,5 @@
+import { options } from "../config/options.js";
+
 export default async function handler(req, res) {
 	if (req.method !== "GET") {
 		res.setHeader("Allow", "GET");
@@ -17,7 +19,7 @@ export default async function handler(req, res) {
 			id
 		)}/market_chart?vs_currency=${encodeURIComponent(currency)}&days=7&interval=daily`;
 
-		const response = await fetch(url, { signal: controller.signal });
+		const response = await fetch(url, { ...options, signal: controller.signal });
 		clearTimeout(timeout);
 
 		if (!response.ok) {

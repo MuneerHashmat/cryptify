@@ -1,3 +1,5 @@
+import { options } from "../config/options.js";
+
 export default async function handler(req, res) {
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
@@ -15,7 +17,7 @@ export default async function handler(req, res) {
     const url = `https://api.coingecko.com/api/v3/coins/${encodeURIComponent(
       id
     )}`;
-    const response = await fetch(url, { signal: controller.signal });
+  const response = await fetch(url, { ...options, signal: controller.signal });
     clearTimeout(timeout);
 
     if (!response.ok) {

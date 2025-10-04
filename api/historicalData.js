@@ -1,8 +1,4 @@
-/* eslint-env node */
-// Vercel serverless function for fetching historical market data
-// Endpoint: GET /api/historical-data?id=bitcoin&currency=usd
-
-export default async (req, res) => {
+export default async function handler(req, res) {
 	if (req.method !== "GET") {
 		res.setHeader("Allow", "GET");
 		return res.status(405).json({ error: "Method Not Allowed" });
@@ -39,4 +35,4 @@ export default async (req, res) => {
 		console.error("historical-data error:", error);
 		return res.status(500).json({ error: "Error fetching historical data" });
 	}
-};
+}
